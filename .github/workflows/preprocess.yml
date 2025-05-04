@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'namadataset_raw/**'
-      - 'preprocessing/automate_Rakha.py'
+      - 'preprocessing/**'
   workflow_dispatch:
 
 jobs:
@@ -14,31 +14,27 @@ jobs:
     timeout-minutes: 15
 
     steps:
-    # 1️⃣ Checkout repository
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # 2️⃣ Set up Python
+    - name: List repository contents
+      run: ls -R ${{ github.workspace }}
+
     - name: Set up Python 3.11
       uses: actions/setup-python@v5
       with:
         python-version: "3.11"
 
-    # 3️⃣ Install minimal dependencies
     - name: Install dependencies
-      run: |
-        pip install pandas numpy pyarrow
+      run: pip install pandas numpy pyarrow
 
-    # 4️⃣ Run preprocessing script
     - name: Run automate_Rakha.py
-      working-directory: ${{ github.workspace }}          # root repo
       run: |
         python preprocessing/automate_Rakha.py \
           --raw namadataset_raw/demand_history.csv \
           --outdir preprocessing/namadataset_preprocessing
 
-    # 5️⃣ Upload cleaned dataset as artifact
-    - name: Upload clean dataset
+    - name: Upload clean.parquet as artifact
       uses: actions/upload-artifact@v4
       with:
         name: clean_dataset
