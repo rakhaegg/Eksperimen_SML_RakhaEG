@@ -14,11 +14,11 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      # 1. Checkout code
+      # 1. Checkout the code into the workspace
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Set up Python
+      # 2. Setup Python
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -32,11 +32,13 @@ jobs:
       # 4. Run preprocessing script
       - name: Run automate_Rakha.py
         run: |
+          # Pastikan kita berada di root of repo
+          ls -R .
           python preprocessing/automate_Rakha.py \
             --raw namadataset_raw/demand_history.csv \
             --outdir preprocessing/namadataset_preprocessing
 
-      # 5. Upload preprocessed dataset
+      # 5. Upload artifact clean.parquet
       - name: Upload clean dataset artifact
         uses: actions/upload-artifact@v4
         with:
