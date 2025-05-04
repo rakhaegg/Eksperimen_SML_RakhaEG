@@ -16,9 +16,6 @@ venv/
 # VSCode
 .vscode/
 
-# Workflow artifacts
-.github/
-
 
 # Data
 namadataset_raw/

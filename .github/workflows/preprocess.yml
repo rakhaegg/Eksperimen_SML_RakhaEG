@@ -1,0 +1,44 @@
+name: preprocess_data
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'namadataset_raw/**'
+      - 'preprocessing/automate_Rakha.py'
+  workflow_dispatch:
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Set up Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install pandas numpy pyarrow
+
+      # 4. Run preprocessing script
+      - name: Run automate_Rakha.py
+        run: |
+          python preprocessing/automate_Rakha.py \
+            --raw namadataset_raw/demand_history.csv \
+            --outdir preprocessing/namadataset_preprocessing
+
+      # 5. Upload preprocessed dataset
+      - name: Upload clean dataset artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clean_dataset
+          path: preprocessing/namadataset_preprocessing/clean.parquet
