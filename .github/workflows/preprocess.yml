@@ -30,7 +30,7 @@ jobs:
 
     - name: Run automate_Rakha.py
       run: |
-        python preprocessing/automate_Rakha.py \
+        python preprocessing/automate_rakha.py \
           --raw namadataset_raw/demand_history.csv \
           --outdir preprocessing/namadataset_preprocessing
 

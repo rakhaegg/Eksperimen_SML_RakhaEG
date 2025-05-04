@@ -18,13 +18,13 @@ venv/
 
 
 # Data
-namadataset_raw/
-preprocessing/namadataset_preprocessing/
-*.parquet
-*.csv
-*.tsv
-*.zip
-*.gz
+# namadataset_raw/
+# preprocessing/namadataset_preprocessing/
+# *.parquet
+# *.csv
+# *.tsv
+# *.zip
+# *.gz
 
 # OS files
 .DS_Store
