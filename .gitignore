@@ -1,0 +1,34 @@
+# Byte‐compiled / caching
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+.env/
+env/
+venv/
+*.conda
+*.env
+
+# VSCode
+.vscode/
+
+# Workflow artifacts
+.github/
+
+
+# Data
+namadataset_raw/
+preprocessing/namadataset_preprocessing/
+*.parquet
+*.csv
+*.tsv
+*.zip
+*.gz
+
+# OS files
+.DS_Store
+Thumbs.db
