@@ -15,7 +15,6 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
 
-# ╭─────────────────────────── 1. LOAD RAW ─────────────────────────────╮
 def load_raw(path: Path) -> pd.DataFrame:
     df = pd.read_csv(
         path,
@@ -27,7 +26,6 @@ def load_raw(path: Path) -> pd.DataFrame:
     return df
 
 
-# ╭─────────────────────────── 2. CLEAN DATA ───────────────────────────╮
 def _parse_order(x: str) -> int:
     x = str(x).strip()
     if x.startswith("(") and x.endswith(")"):
@@ -63,7 +61,6 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-# ╭───────────────────────── 3. FEATURE ENGINEERING ────────────────────╮
 def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     df = df.sort_values(["Product_Code", "Date"]).reset_index(drop=True)
     grp = df.groupby("Product_Code")
@@ -79,7 +76,6 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# ╭──────────────────────────── 4. SPLIT ───────────────────────────────╮
 def time_split(df: pd.DataFrame, cutoff: str = "2016-01-01") -> Tuple[pd.DataFrame, pd.DataFrame]:
     train_df = df[df["Date"] < cutoff]
     test_df = df[df["Date"] >= cutoff]
@@ -87,7 +83,6 @@ def time_split(df: pd.DataFrame, cutoff: str = "2016-01-01") -> Tuple[pd.DataFra
     return train_df, test_df
 
 
-# ╭─────────────────────────── 5. SAVE ARTEFAK ─────────────────────────╮
 def save_artifacts(train_df: pd.DataFrame, test_df: pd.DataFrame, outdir: Path) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     train_df.to_parquet(outdir / "train.parquet", index=False)
@@ -97,7 +92,6 @@ def save_artifacts(train_df: pd.DataFrame, test_df: pd.DataFrame, outdir: Path) 
     full_df.to_parquet(outdir / "feature_df.parquet", index=False)
     print(f"[save_artifacts] saved to {outdir}")
 
-# ╭──────────────────────────── MAIN ───────────────────────────────────╮
 def main():
     
     parser = argparse.ArgumentParser()
