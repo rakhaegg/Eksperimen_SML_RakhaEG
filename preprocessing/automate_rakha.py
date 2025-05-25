@@ -87,7 +87,6 @@ def save_artifacts(train_df: pd.DataFrame, test_df: pd.DataFrame, outdir: Path) 
     outdir.mkdir(parents=True, exist_ok=True)
     train_df.to_parquet(outdir / "train.parquet", index=False)
     test_df.to_parquet(outdir / "test.parquet", index=False)
-    # Simpan full feature store juga
     full_df = pd.concat([train_df, test_df])
     full_df.to_parquet(outdir / "feature_df.parquet", index=False)
     print(f"[save_artifacts] saved to {outdir}")
